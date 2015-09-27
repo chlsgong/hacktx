@@ -8,6 +8,7 @@
 
 #import "TLHMViewController.h"
 #import <MyoKit/MyoKit.h>
+#import <Socket_IO_Client_Swift/Socket_IO_Client_Swift-Swift.h>
 
 @interface TLHMViewController ()
 
@@ -83,45 +84,19 @@
                                              selector:@selector(didReceivePoseChange:)
                                                  name:TLMMyoDidReceivePoseChangedNotification
                                                object:nil];
-
+    SocketIOClient* socket = [[SocketIOClient alloc] initWithSocketURL:@"http://fistpump.azurewebsites.net" opts:nil];
+    
+    [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"socket connected");
+    }];
+    
+    [socket connect];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//- (UIColor *)colorBasedOnZ:(float)zValue {
-//    UIColor *r;
-//    float z = fabsf(zValue);
-//    if(z <= 4 && z > 24/7) {
-//        r = [UIColor redColor];
-//        return r;
-//    }
-//    else if(z <= 24/7 && z > 20/7) {
-//        r = [UIColor orangeColor];
-//        return r;
-//    }
-//    else if(z <= 20/7 && z > 16/7) {
-//        r = [UIColor yellowColor];
-//        return r;
-//    }
-//    else if(z <= 16/7 && z > 12/7) {
-//        r = [UIColor greenColor];
-//        return r;
-//    }
-//    else if(z <= 12/7 && z > 8/7) {
-//        r = [UIColor blueColor];
-//        return r;
-//    }
-//    else if(z <= 8/7 && z > 4/7) {
-//        r = [UIColor purpleColor];
-//        return r;
-//    }
-//    else
-//        r = [UIColor grayColor];
-//    return r;
-//}
 
 #pragma mark - NSNotificationCenter Methods
 
@@ -320,6 +295,7 @@
 }
 
 - (IBAction)didTapSettings:(id)sender {
+    
     // Note that when the settings view controller is presented to the user, it must be in a UINavigationController.
     UINavigationController *controller = [TLMSettingsViewController settingsInNavigationController];
     // Present the settings view controller modally.

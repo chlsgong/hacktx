@@ -225,29 +225,25 @@
         self.colorView.backgroundColor = [UIColor yellowColor];
         [socket emit:@"newColor" withItems:@[@"#FFFF00"]];
     }
-    else if(m <= 150 && m > 130) {
-        self.colorView.backgroundColor = [UIColor greenColor];
-        [socket emit:@"newColor" withItems:@[@"#00FF00"]];
+    else if(m <= 150 && m > 140) {
+        self.colorView.backgroundColor = [UIColor cyanColor];
+        [socket emit:@"newColor" withItems:@[@"#00FFFF"]];
     }
-    else if(m <= 130 && m > 110) {
+    else if(m <= 140 && m > 120) {
         self.colorView.backgroundColor = [UIColor blueColor];
         [socket emit:@"newColor" withItems:@[@"#0000FF"]];
     }
-    else if(m <= 110 && m > 90) {
-        self.colorView.backgroundColor = [UIColor magentaColor];
-        [socket emit:@"newColor" withItems:@[@"#FF00FF"]];
+    else if(m <= 120 && m > 90) {
+        self.colorView.backgroundColor = [UIColor cyanColor];
+        [socket emit:@"newColor" withItems:@[@"#00FFFF"]];
     }
     else if(m <= 90 && m > 80) {
-        self.colorView.backgroundColor = [UIColor cyanColor];
-        [socket emit:@"newColor" withItems:@[@"#00FFFF"]];
-    }
-    else if(m <= 80 && m > 70) {
-        self.colorView.backgroundColor = [UIColor lightGrayColor];
-        [socket emit:@"newColor" withItems:@[@"#AAAAAA"]];
+        self.colorView.backgroundColor = [UIColor greenColor];
+        [socket emit:@"newColor" withItems:@[@"#00FF00"]];
     }
     else if(m <= 70) {
-        self.colorView.backgroundColor = [UIColor cyanColor];
-        [socket emit:@"newColor" withItems:@[@"#00FFFF"]];
+        self.colorView.backgroundColor = [UIColor magentaColor];
+        [socket emit:@"newColor" withItems:@[@"#FF00FF"]];
     }
 }
 

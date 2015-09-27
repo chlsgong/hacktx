@@ -10,7 +10,9 @@
 #import <MyoKit/MyoKit.h>
 #import <Socket_IO_Client_Swift/Socket_IO_Client_Swift-Swift.h>
 
-@interface TLHMViewController ()
+@interface TLHMViewController () {
+    SocketIOClient* socket;
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *helloLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *accelerationProgressBar;
@@ -21,7 +23,6 @@
 @property (strong, nonatomic) TLMPose *currentPose;
 
 - (IBAction)didTapSettings:(id)sender;
-//- (UIColor *)colorBasedOnZ:(float)zValue;
 
 @end
 
@@ -84,11 +85,12 @@
                                              selector:@selector(didReceivePoseChange:)
                                                  name:TLMMyoDidReceivePoseChangedNotification
                                                object:nil];
-    SocketIOClient* socket = [[SocketIOClient alloc] initWithSocketURL:@"http://fistpump.azurewebsites.net" opts:nil];
+    socket = [[SocketIOClient alloc] initWithSocketURL:@"http://fistpump.azurewebsites.net" opts:nil];
     
     [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
         NSLog(@"socket connected");
     }];
+    [socket emit:@"newColor" withItems:@[@"hello world"]];
     
     [socket connect];
 }

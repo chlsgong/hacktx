@@ -89,7 +89,7 @@
     socket = [[SocketIOClient alloc] initWithSocketURL:@"localhost:3000" opts:nil];
     
     [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        [socket emit:@"newColor" withItems:@[@0x000001]];
+        [socket emit:@"newColor" withItems:@[@"#FFFFFF"]];
         NSLog(@"socket connected");
     }];
     

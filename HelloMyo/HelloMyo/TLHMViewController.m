@@ -12,6 +12,8 @@
 
 @interface TLHMViewController () {
     SocketIOClient* socket;
+    double lastTime;
+    int lastNum;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *helloLabel;
@@ -94,6 +96,9 @@
     }];
     
     [socket connect];
+    
+    lastTime = 0;
+    lastNum = 0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -211,13 +216,29 @@
     // float z = accelerationVector.z;
     
     float m = magnitude * 100;
-    NSLog(@"m = %.2f", m);
+    //NSLog(@"m = %.2f", m);
     
-    if(m > 350) {
-        self.colorView.backgroundColor = [UIColor redColor];
-        [socket emit:@"newColor" withItems:@[@"#FF0000"]];
+    NSArray *color = @[@"red", @"orange", @"yellow", @"green", @"cyan", @"magenta"];
+    int num;
+    do {
+        num = arc4random() % (color.count);
+    }while(num == lastNum);
+    double c = CFAbsoluteTimeGetCurrent();
+    //NSLog(@"c = %.2f", c);
+    //if(m > 350) {
+      //  self.colorView.backgroundColor = [UIColor redColor];
+        //[socket emit:@"newColor" withItems:@[@"#FF0000"]];
+   // }
+    if(m > 200) {
+        if(c - lastTime > 0.75) {
+            self.colorView.backgroundColor = [UIColor orangeColor];
+            [socket emit:@"newColor" withItems:@[color[num]]];
+            lastTime = c;
+            lastNum = num;
+            NSLog(@"%@",color[num]);
+        }
     }
-    else if(m <= 350 && m > 200) {
+    /*else if(m <= 350 && m > 200) {
         self.colorView.backgroundColor = [UIColor orangeColor];
         [socket emit:@"newColor" withItems:@[@"#FF8000"]];
     }
@@ -244,7 +265,7 @@
     else if(m <= 70) {
         self.colorView.backgroundColor = [UIColor magentaColor];
         [socket emit:@"newColor" withItems:@[@"#FF00FF"]];
-    }
+    }*/
 }
 
 - (void)didReceivePoseChange:(NSNotification *)notification {

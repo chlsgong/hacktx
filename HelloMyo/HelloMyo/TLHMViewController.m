@@ -85,12 +85,13 @@
                                              selector:@selector(didReceivePoseChange:)
                                                  name:TLMMyoDidReceivePoseChangedNotification
                                                object:nil];
-    socket = [[SocketIOClient alloc] initWithSocketURL:@"http://fistpump.azurewebsites.net" opts:nil];
+    
+    socket = [[SocketIOClient alloc] initWithSocketURL:@"localhost:3000" opts:nil];
     
     [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        [socket emit:@"newColor" withItems:@[@0x000001]];
         NSLog(@"socket connected");
     }];
-    [socket emit:@"newColor" withItems:@[@"hello world"]];
     
     [socket connect];
 }

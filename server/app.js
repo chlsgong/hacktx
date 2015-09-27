@@ -17,10 +17,11 @@ io.on('connection', function(socket) {
         console.log(msg);
     });
     
-    socket.on('disconnect', function(msg) {      
+    socket.on('disconnect', function(msg) {
+        
       console.log(msg);
     });
-  
+           
 });
 
 http.listen(port, function() {

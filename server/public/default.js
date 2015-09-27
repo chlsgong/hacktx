@@ -10,6 +10,7 @@
         
       socket.on('newColor', function (msg) {
           document.body.style = msg.color;
+          console.log('test');
       });
 })();
 

@@ -7,10 +7,7 @@
       //////////////////////////////
 
       socket.on('newColor', function (msg) {
-          document.body.style.backgroundColor = "white";
-          setTimeout(function(){
-            document.body.style.backgroundColor = msg;
-          }, 400);
+          document.body.style.backgroundColor = msg;
           console.log(msg);
       });
 })();

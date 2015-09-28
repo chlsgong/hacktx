@@ -41,6 +41,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self becomeFirstResponder];
+
     // Data notifications are received through NSNotificationCenter.
     // Posted whenever a TLMMyo connects
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -323,8 +325,33 @@
     }
 }
 
+- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    NSArray *color = @[@"red", @"orange", @"yellow", @"green", @"cyan", @"magenta"];
+    NSArray *uicolor = @[[UIColor redColor], [UIColor orangeColor], [UIColor yellowColor], [UIColor greenColor], [UIColor cyanColor], [UIColor magentaColor]];
+    int num;
+    if(event.type == UIEventSubtypeMotionShake) {
+        do {
+            num = arc4random() % (color.count);
+        }while(num == lastNum);
+        lastNum = num;
+        [socket emit:@"newColor" withItems:@[color[num]]];
+        self.colorView.backgroundColor = uicolor[num];
+    }
+}
+
+- (IBAction)buttonTapped:(UIButton *)sender {
+    NSArray *color = @[@"red", @"orange", @"yellow", @"green", @"cyan", @"magenta"];
+    NSArray *uicolor = @[[UIColor redColor], [UIColor orangeColor], [UIColor yellowColor], [UIColor greenColor], [UIColor cyanColor], [UIColor magentaColor]];
+    int num;
+    do {
+        num = arc4random() % (color.count);
+    }while(num == lastNum);
+    lastNum = num;
+    [socket emit:@"newColor" withItems:@[color[num]]];
+    self.colorView.backgroundColor = uicolor[num];
+}
+
 - (IBAction)didTapSettings:(id)sender {
-    
     // Note that when the settings view controller is presented to the user, it must be in a UINavigationController.
     UINavigationController *controller = [TLMSettingsViewController settingsInNavigationController];
     // Present the settings view controller modally.
